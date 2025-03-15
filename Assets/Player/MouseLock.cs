@@ -10,7 +10,11 @@ public class MouseLock : MonoBehaviour
 
     public Transform playerBody;
 
+    [SerializeField] private float _maxDistanceBeforePicture;
+    [SerializeField] private float _power;
+
     private float xRotation = 0f;
+
 
     void Start()
     {
@@ -27,5 +31,23 @@ public class MouseLock : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            StartCoroutine(PictureShaker());
+        }
     }
+
+	protected IEnumerator PictureShaker()
+	{
+        RaycastHit hit;
+        Physics.Raycast(transform.position, transform.forward, out hit, _maxDistanceBeforePicture);
+
+        if(hit.collider.gameObject.tag == "Picture")
+        {
+            hit.collider.gameObject.GetComponent<Rigidbody>().AddForce(_power, _power, _power, ForceMode.VelocityChange);
+            yield return new WaitForSeconds(1.2f);
+            hit.collider.gameObject.GetComponentInParent<HingeJoint>().breakForce = 0f;
+        }
+	}
 }

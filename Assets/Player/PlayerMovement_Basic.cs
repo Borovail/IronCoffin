@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerMovement_Basic : MonoBehaviour
 {
+    [SerializeField] private GameObject _flashlight;
+
     private Transform transform;
 
     [SerializeField] private CharacterController controller;
@@ -68,6 +70,11 @@ public class PlayerMovement_Basic : MonoBehaviour
         velocity.y -= gravity * Time.deltaTime;
 
         controller.Move(velocity * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            _flashlight.SetActive(!_flashlight.activeSelf);
+        }
     }
 
 }

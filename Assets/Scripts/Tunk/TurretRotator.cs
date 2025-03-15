@@ -62,7 +62,7 @@ public class Turret : MonoBehaviour
 			_turret.transform.rotation = Quaternion.Euler(_y, _x, 0f);
 		}
 
-		float[] _currentRotationCoord = { _y - _y % 1, _x - _x % 1, 0 };
+		float[] _currentRotationCoord = { _y - _y % 1, (_x - _x % 1) % 360 + 180, 0 };
 		float[] _corrFullCoordinates = { _correctCoordinatesY[_countOfShots] * 1.00f, _correctCoordinatesX0Z[_countOfShots] * 1.00f, 0 };
 
 		_coordinator.text = "Aim coordinates:\nX:" + _corrFullCoordinates[0] + "\nY:" + _corrFullCoordinates[1];
