@@ -9,14 +9,16 @@ public class SitDowner : MonoBehaviour
 
     public bool isAvialable;
 
-    [SerializeField] private AudioSource source;
-    [SerializeField] private AudioClip notAvialable;
+    //[Header("Audio settings")]
+
+    //[SerializeField] private AudioSource source;
+    //[SerializeField] private AudioClip notAvialable;
 
     private CameraActivator toCamActive;
 
     void Start()
     {
-        source = GetComponent<AudioSource>();
+        //source = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -38,7 +40,7 @@ public class SitDowner : MonoBehaviour
                     }
                     else
                     {
-                        source.PlayOneShot(notAvialable);
+                        //source.PlayOneShot(notAvialable);
                     }
                 }
                 //Debug.Log("+Ray");
