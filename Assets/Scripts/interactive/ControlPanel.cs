@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -9,9 +10,8 @@ namespace interactive
         public float length = 0; 
         public float rotation = 0;
         
-        [SerializeField] private ControlPanelButton leftButton;
-        [SerializeField] private ControlPanelButton rightButton;
-        [SerializeField] private ControlPanelButton forwardButton;
+        [SerializeField] private MeshRenderer leftLight;
+        [SerializeField] private MeshRenderer rightLight;
         
         private float rotationSpeed = 10f;
         private float moveSpeed = 10f;
@@ -27,7 +27,7 @@ namespace interactive
         {
             update_length_and_rotation(1, 1);
         }
-
+        
         private void Update()
         {
             if (rotation <= 0 && isRotating)
@@ -78,6 +78,17 @@ namespace interactive
         {
             rotation = multiplier_for_rotation * magic_number;
             length = multiplier_for_move * magic_number;
+        }
+
+        public void LoadBullet()
+        {
+            transform.DOMove(new Vector3(transform.position.x, transform.position.y, -8f), 2f);
+        }
+
+        public void ShootBullet()
+        {
+            transform.DOMoveZ(-5.95f, 0.2f).SetEase(Ease.Linear);
+            update_length_and_rotation(2, 2);
         }
     }
 }
