@@ -27,12 +27,13 @@ namespace Assets.Scripts
     {
         private IEnumerable<IEngineEffect> _engineEffects;
         private IEnumerable<IShootEffect> _shootEffects;
-        private IEnumerable<IEndGameEffect> _endEffects;
+        private IEndGameEffect _endEffect;
+
         private void Start()
         {
             _engineEffects = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IEngineEffect>();
             _shootEffects = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IShootEffect>();
-            _endEffects = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IEndGameEffect>();
+            _endEffect = FindFirstObjectByType<EndGame>();
         }
 
         private void Update()
@@ -49,16 +50,13 @@ namespace Assets.Scripts
                     engineEffect.StopEffect();
                 }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.RightShift))
                 foreach (var shootEffect in _shootEffects)
                 {
                     shootEffect.ShootEffect();
                 }
-            if (Input.GetKeyDown(KeyCode.KeypadEnter))
-                foreach (var endEffect in _endEffects)
-                {
-                    endEffect.EndEffect();
-                }
+            if (Input.GetKeyDown(KeyCode.G))
+                _endEffect.EndEffect();
         }
     }
 }

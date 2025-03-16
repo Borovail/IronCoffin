@@ -42,12 +42,6 @@ public class Lamp : MonoBehaviour, IEngineEffect
         minIntensity += lamp.intensity;
         maxIntensity += lamp.intensity;
         ResetFlickerTimer();
-        baseSwingSpeed = swingSpeed;
-        baseSwingAmount = swingAmount;
-
-        // Изначальные значения для плавного старта
-        currentSwingSpeed = 0f;
-        currentSwingAmount = 0f;
     }
 
     private void Update()
