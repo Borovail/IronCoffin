@@ -1,7 +1,7 @@
 using Assets.Scripts;
 using UnityEngine;
 
-public class ObjectShake : MonoBehaviour, IEngineEffect, IShootEffect
+public class ObjectShake : MonoBehaviour, IEngineEffect, IShootEffect,Iinteractable
 {
     public float intensity = 0.01f; // Базовая интенсивность
     public float speed = 10f; // Скорость тряски
@@ -66,5 +66,13 @@ public class ObjectShake : MonoBehaviour, IEngineEffect, IShootEffect
         float shakeY = (Mathf.PerlinNoise(0, Time.time * speed) - 0.5f) * currentIntensity;
 
         transform.localPosition = startPos + new Vector3(shakeX, shakeY, 0);
+    }
+
+    public void OnInteract()
+    {
+    }
+
+    public void OnRelease()
+    {
     }
 }
