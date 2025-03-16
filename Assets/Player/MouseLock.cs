@@ -10,6 +10,8 @@ public class MouseLock : MonoBehaviour
 
     public Transform playerBody;
 
+
+
     [SerializeField] private float _maxDistanceBeforePicture;
     [SerializeField] private float _power;
 
@@ -43,11 +45,11 @@ public class MouseLock : MonoBehaviour
         RaycastHit hit;
         Physics.Raycast(transform.position, transform.forward, out hit, _maxDistanceBeforePicture);
 
-        if(hit.collider.gameObject.tag == "Picture")
+        if(hit.collider != null && hit.collider.gameObject.tag == "Picture")
         {
             hit.collider.gameObject.GetComponent<Rigidbody>().AddForce(_power, _power, _power, ForceMode.VelocityChange);
             yield return new WaitForSeconds(1.2f);
-            hit.collider.gameObject.GetComponentInParent<HingeJoint>().breakForce = 0f;
+            hit.collider.gameObject.GetComponent<HingeJoint>().breakForce = 0f;
         }
 	}
 }
