@@ -38,7 +38,10 @@ public class Turret : MonoBehaviour
 
 	[SerializeField] private string _playerTag;
 
-	public bool _isAvailable = false;
+	[SerializeField] private float _maxDistanceAct;
+
+	public LayerMask _mask;
+
 	public bool _isActive = false;
 
 	private GameObject _player;
@@ -46,7 +49,7 @@ public class Turret : MonoBehaviour
 
 	void Start()
     {
-        
+		_player = GameObject.FindWithTag("Player");
     }
 
     // Update is called once per frame
@@ -68,18 +71,9 @@ public class Turret : MonoBehaviour
 		_coordinator.text = "Aim coordinates:\nX:" + _corrFullCoordinates[0] + "\nY:" + _corrFullCoordinates[1];
 		_spotterText.text = "Aim coordinates:\nX:" + _currentRotationCoord[1] + "\nY:" + -_currentRotationCoord[0];
 
-		if (Input.GetKeyDown(KeyCode.E) && _isAvailable == true)
+		if (Input.GetKeyDown(KeyCode.E))
 		{
-			if(_isActive == false)
-			{
-				_camera.GetComponent<SeatCamera>().CameraToBasic();
-
-				_camera.SetActive(true);
-				_player.SetActive(false);
-				_isActive = true;
-
-			}
-			else
+			if (_isActive == true)
 			{
 				_camera.SetActive(false);
 				_player.SetActive(true);
@@ -88,27 +82,20 @@ public class Turret : MonoBehaviour
 		}
 	}
 
-	protected void Fire()
+	private void Fire()
 	{
 		_countOfShots++;
 		print("The shot is fired");
 	}
 
-	private void OnTriggerEnter(Collider other)
-	{
-		if(other.tag == _playerTag)
-		{
-			_isAvailable = true;
-			_player = other.gameObject;
-		}
-	}
 
-	private void OnTriggerExit(Collider other)
+	public void ActivateAim()
 	{
-		if (other.tag == _playerTag)
-		{
-			_isAvailable = false;
-			_player = null;
-		}
+		print("b");
+		_camera.GetComponent<SeatCamera>().CameraToBasic();
+
+		_camera.SetActive(true);
+		_player.SetActive(false);
+		_isActive = true;
 	}
 }

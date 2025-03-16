@@ -10,12 +10,14 @@ public class MouseLock : MonoBehaviour
 
     public Transform playerBody;
 
-
+    public bool _isHaveEstinguisher = false;
 
     [SerializeField] private float _maxDistanceBeforePicture;
     [SerializeField] private float _power;
 
     private float xRotation = 0f;
+
+    private Extinguisher _ext;
 
 
     void Start()
@@ -40,16 +42,43 @@ public class MouseLock : MonoBehaviour
         }
     }
 
-	protected IEnumerator PictureShaker()
+	private IEnumerator PictureShaker()
 	{
-        RaycastHit hit;
+
+		RaycastHit hit;
         Physics.Raycast(transform.position, transform.forward, out hit, _maxDistanceBeforePicture);
 
-        if(hit.collider != null && hit.collider.gameObject.tag == "Picture")
+		if (_isHaveEstinguisher == true)
+		{
+			_ext.LetGoF();
+			_ext.enabled = false;
+			_isHaveEstinguisher = false;
+		}
+
+		if (hit.collider != null && hit.collider.gameObject.CompareTag("Picture"))
         {
-            hit.collider.gameObject.GetComponent<Rigidbody>().AddForce(_power, _power, _power, ForceMode.VelocityChange);
+            hit.collider.gameObject.GetComponent<Rigidbody>().AddForce(_power, 0f, _power, ForceMode.VelocityChange);
             yield return new WaitForSeconds(1.2f);
             hit.collider.gameObject.GetComponent<HingeJoint>().breakForce = 0f;
         }
+        else if (hit.collider.gameObject.CompareTag("Spotter"))
+        {
+            hit.collider.gameObject.GetComponent<Turret>().ActivateAim();
+		}
+		else if (hit.collider.gameObject.CompareTag("Extinguisher"))
+		{
+            if(_isHaveEstinguisher == false)
+            {
+				_ext = hit.collider.gameObject.GetComponent<Extinguisher>();
+                _ext.enabled = true;
+
+				yield return new WaitForEndOfFrame();
+				yield return new WaitForEndOfFrame();
+
+				_ext.HoldEstinguisher();
+                _isHaveEstinguisher = true;
+			}
+		}
+
 	}
 }

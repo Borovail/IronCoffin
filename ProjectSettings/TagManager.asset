@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Picture
   - CinemachineTarget
+  - Spotter
+  - Holder
+  - Extinguisher
   layers:
   - Default
   - TransparentFX
@@ -14,9 +17,9 @@ TagManager:
   - Water
   - UI
   - Picture
-  - 
-  - 
-  - 
+  - Interactable
+  - Fire
+  - Extinguisher
   - 
   - 
   - 
